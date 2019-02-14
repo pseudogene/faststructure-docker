@@ -5,6 +5,8 @@ RUN install_packages \
 		python-dev \
 		python-numpy \
 		python-scipy \
+		python-matplotlib \
+		python-tk \
 		libgsl0-dev \
 		gcc \
 		wget
@@ -16,6 +18,7 @@ RUN wget --no-check-certificate \
 	cd /fstr/vars && \
 	python setup.py build_ext --inplace && \
 	cd /fstr/ && \
-	python setup.py build_ext --inplace
+	python setup.py build_ext --inplace && \
+	sed -i '1s/^/import matplotlib\nmatplotlib.use("Agg")\n/' distruct.py 
 
 CMD ["python", "structure.py"]
